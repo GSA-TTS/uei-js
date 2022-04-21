@@ -83,4 +83,4 @@ const checkDigit = (d) => {
   return res == d[d.length - 1];
 };
 
-export { validUEI };
+exports.validUEI = validUEI;

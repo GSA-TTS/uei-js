@@ -2,11 +2,10 @@
   "name": "uei",
   "version": "1.0.0",
   "description": "Check to see whether a string conforms to the SAM.gov Unique Entity Identifier standard",
-  "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "minify": "terser -mc --wrap uei -o uei.min.js uei.js"
   },
-  "type": "module",
   "author": "V. David Zvenyach",
   "license": "CC0",
   "devDependencies": {

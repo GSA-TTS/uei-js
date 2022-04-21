@@ -6,9 +6,20 @@ This library exists to allow for client-side validation of UEIs to enable better
 
 ## Usage
 
+This can be used in the browser by loading the javascript file.
+
+```html
+<script src="uei.min.js"></script>
+<script>
+  uei.validUEI("VN1AJFAD19J9"); //Should be true
+</script>
+```
+
+Or you can use it as a node module.
+
 ```js
-import { validUEI } from "uei.min.js";
-validUEI("VN1AJFAD19J9"); // Should be true
+const uei = require("uei.js");
+uei.validUEI("VN1AJFAD19J9"); // Should be true
 ```
 
 ## Testing
