@@ -7,33 +7,10 @@ const validUEI = (d) => {
   // Steps are laid out here:
   // https://www.gsa.gov/about-us/organization/federal-acquisition-service/office-of-systems-management/integrated-award-environment-iae/iae-systems-information-kit/uei-technical-specifications-and-api-information
 
-  // 12-character
-  if (d.length != 12) {
-    return false;
-  }
-
-  // The first character is not zero to avoid cutting off digits that can occur during data imports, for example, when importing data into spreadsheet programs.
-  if (d[0] == "0") {
-    return false;
-  }
-
-  //The letters “O” and “I” are not used to avoid confusion with zero and one.
-  if (d.toUpperCase().includes("O") || d.toUpperCase().includes("I")) {
-    return false;
-  }
-
-  // Nine-digit sequences are not used in the identifier to avoid collision with the nine-digit DUNS Number or Taxpayer Identification Number (TIN).
-  if (d.match(/\d{9}/)) {
-    return false;
-  }
-
-  // The final character is a checksum of the first 11 characters. Checksums are used to detect errors within data.
-  if (!checkDigit(d)) {
-    return false;
-  }
-
-  // If you've made it here, it's valid
-  return true;
+  d = d.toUpperCase();
+  return /^\w{12}$/.test(d) && !/(^0)|\d{9}|[O|I]/.test(d) && _checkDigit(d)
+    ? true
+    : false;
 };
 
 /**
@@ -41,7 +18,7 @@ const validUEI = (d) => {
  * @param {string} d — The UEI string
  * @returns boolean as to whether the check digit is valid
  */
-const checkDigit = (d) => {
+const _checkDigit = (d) => {
   // This is the workhorse and it runs twice...
   // For each character, you multiply by its position
   // Then you take modulus 10 of the product
@@ -83,4 +60,13 @@ const checkDigit = (d) => {
   return res == d[d.length - 1];
 };
 
-exports.validUEI = validUEI;
+let methods = {
+  validUEI,
+};
+
+// This allows for the private export of the checkDigit
+// function for testing purposes
+if (process.env.NODE_ENV == "test") {
+  methods._checkDigit = _checkDigit;
+}
+module.exports = methods;
