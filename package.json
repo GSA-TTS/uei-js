@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Check to see whether a string conforms to the SAM.gov Unique Entity Identifier standard",
   "scripts": {
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "minify": "terser -mc --wrap uei -o uei.min.js uei.js"
   },
   "author": "V. David Zvenyach",
